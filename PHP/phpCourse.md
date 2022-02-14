@@ -98,7 +98,7 @@
 
 	// Ou mieux, dans ce cas précis
 	$isAdult = ($userAge >= 18);
-?>
+	?>
 	```
 - Tableaux :
 	```php
