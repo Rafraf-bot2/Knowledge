@@ -86,8 +86,10 @@
 		$isAdult = false;
 	}
 	?>
-	```
-	Devient :
+	```  
+
+	Devient :  
+
 	```php
 	<?php
 	$userAge = 24;
@@ -99,7 +101,7 @@
 ?>
 	```
 - Tableaux :
-```php
+	```php
 	<?php
 	$mickael = ['Mickaël Andrieu', 'mickael.andrieu@exemple.com', 'S3cr3t', 34];
 
@@ -112,9 +114,9 @@
 	$users = [$mickael, $mathieu, $laurene];
 	echo $users[1][1]; // "mathieu.nebra@exemple.com"
 	?>
-```
+	```  
 	- **Tableau associatif**  
-	Tableau qui sert a *étiqueter* les cases au lieu de les *numéroter*
+Tableau qui sert a *étiqueter* les cases au lieu de les *numéroter*  
 	```php
 		<?php
 		$recipe = [
