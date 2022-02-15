@@ -339,11 +339,11 @@ On peut en employer deux :
 	</form>
 	```
 	<p align="center"><strong>index.php</strong></p>  
-	
-		- L'utilisateur a entré dans le formulaire `utilisateur@example.com` et `Bonjour`  
-		- Le formulaire va etre converti en lien vers : `submit_contact.php?email=utilisateur%40example.com&message=Bonjour`  
-		- Ces informations pourront etre recuperés dans `submit_contact.php`
-		- Une variable <a href="https://www.php.net/manual/fr/language.variables.superglobals.php" target="_blank">superglobale</a> `$_GET` 
+
+		 L'utilisateur a entré dans le formulaire `utilisateur@example.com` et `Bonjour`  
+		 Le formulaire va etre converti en lien vers : `submit_contact.php?email=utilisateur%40example.com&message=Bonjour`  
+		 Ces informations pourront etre recuperés dans `submit_contact.php`
+		 Une variable <a href="https://www.php.net/manual/fr/language.variables.superglobals.php" target="_blank">superglobale</a> `$_GET` 
 va contenir les données envoyées  
 | Nom             	| Valeur          	      |
 |:-----------------:|:-----------------------:|
