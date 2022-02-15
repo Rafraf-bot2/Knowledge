@@ -344,24 +344,26 @@ On peut en employer deux :
 	Le formulaire va etre converti en lien vers : `submit_contact.php?email=utilisateur%40example.com&message=Bonjour`  
 	Ces informations pourront etre recuperés dans `submit_contact.php`
 	Une variable <a href="https://www.php.net/manual/fr/language.variables.superglobals.php" target="_blank">superglobale</a> `$_GET` 
-	va contenir les données envoyées  
-
+va contenir les données envoyées  
+  
 | Nom             	| Valeur          	      |
 |:-----------------:|:-----------------------:|
 | $\_GET['email'] 	| utilisateur@example.com |
-| $\_GET['message'] | Bonjour				  |
+| $\_GET['message'] | Bonjour				  |  
   
-	```php
-	<h1>Message bien reçu !</h1>
+
+  
+```php
+<h1>Message bien reçu !</h1>
         
-	<div class="card">
+<div class="card">
 	    
-	    <div class="card-body">
-	        <h5 class="card-title">Rappel de vos informations</h5>
-	        <p class="card-text"><b>Email</b> : <?php echo $_GET['email']; ?></p>
-	        <p class="card-text"><b>Message</b> : <?php echo $_GET['message']; ?></p>
-	    </div>
-	</div>
-	```  
-	<p align="center"><strong>submit_contact.php</strong></p>  
+    <div class="card-body">
+        <h5 class="card-title">Rappel de vos informations</h5>
+        <p class="card-text"><b>Email</b> : <?php echo $_GET['email']; ?></p>
+        <p class="card-text"><b>Message</b> : <?php echo $_GET['message']; ?></p>
+    </div>
+</div>
+```   
+<p align="center"><strong>submit_contact.php</strong></p>  
 ⚠️Ne jamais faire confiance qui transitent de page en page 
