@@ -127,7 +127,7 @@ Tableau qui sert a *étiqueter* les cases au lieu de les *numéroter*
 		];
 
 		echo $recipe['title']; //Cassoulet
-	?>
+		?>
 	```
 	- **print_r**  
 	Permet d'afficher entièrement un tableau (une sorte d'echo spécialisé pour les tableaux)  
@@ -152,6 +152,7 @@ Tableau qui sert a *étiqueter* les cases au lieu de les *numéroter*
 	echo '<pre>'; //permet d'avoir un affichage plus lisible
 	print_r($recipes);
 	echo '</pre>';
+	?>
 	```
 	- **array_key_exists**, **in_array** et **array_search**
 	```php
@@ -177,6 +178,7 @@ Tableau qui sert a *étiqueter* les cases au lieu de les *numéroter*
 	//renvoie la clé correspondante (num ou nom ça dépend du tableau) si elle trouve la val, faux sinon
 	$cleSalade = array_search('Salade Romaine', $recipe)
 	echo '"Salade Romaine" se trouve dans' . $cleSalade . PHP_EOL;
+	?>
 	```
 - Boucles :
 	- **while**
@@ -272,3 +274,93 @@ Tableau qui sert a *étiqueter* les cases au lieu de les *numéroter*
 	echo 'Bonjour ! Nous sommes le ' . $day . '/' . $month . '/' . $year . 'et il est ' . $hour. ' h ' . $minut;
 	?>
 	```
+	- **Test de l'existence d'une var**
+	```php
+	<?php
+
+	//isset() teste si une variable existe
+	if (!isset($_GET['email']) || !isset($_GET['message']))
+	{
+		echo('Il faut un email et un message pour soumettre le formulaire.');
+		
+		// Arrête l'exécution de PHP
+	    return;
+	}
+	?>
+	```
+	- **Controle**
+	```php
+	<?php
+
+	//filter_var(var, filtre) verifie si var passe le filtre
+	//empty(var) vérifie si var est vide
+	if (
+	    (!isset($_GET['email']) || !filter_var($_GET['email'], FILTER_VALIDATE_EMAIL))
+	    || (!isset($_GET['message']) || empty($_GET['message']))
+	    )
+	{
+		echo('Il faut un email et un message valides pour soumettre le formulaire.');
+	    return;
+	}
+	?>
+	```
+
+- Formulaires :  
+Forme d'un formulaire :
+	```php
+	<!-- index.php -->
+	<form method="post" action="submit_form.php">
+	 
+	<p>
+	    On insèrera ici les éléments de notre formulaire.
+	</p>
+	 
+	</form>
+	```  
+- `action` = Page cible appelée par le formulaire. Elle recevra les données du formulaire et les traitera.
+- `method` = Méthode d'envoie utilisée  
+On peut en employer deux :
+	- `get` : Les données transitent par l'url (données limitées car URL <= 256 de préference). On les recupère avec le tableau `$_GET`.
+	- `post` : Les données ne transitent pas par l'url (donc données illimités). On les recupère avec le tableau `$_POST`
+	⚠️On vérifie quand meme les parametres.  
+⚠️On privilégie `post`   
+<br>Exemple avec `get` :
+	```php
+	<form action="submit_contact.php" method="GET">
+	    <div>
+	        <label for="email">Email</label>
+	        <input type="email" name="email">
+	    </div>
+	    <div>
+	        <label for="message">Votre message</label>
+	        <textarea placeholder="Exprimez vous" name="message"></textarea>
+	    </div>
+	    <button type="submit">Envoyer</button>
+	</form>
+	```
+	<p align="center"><strong>index.php</strong></p>  
+
+		- L'utilisateur a entré dans le formulaire `utilisateur@example.com` et `Bonjour`  
+		- Le formulaire va etre converti en lien vers : `submit_contact.php?email=utilisateur%40example.com&message=Bonjour`  
+		- Ces informations pourront etre recuperés dans `submit_contact.php`
+		- Une variable <a href="https://www.php.net/manual/fr/language.variables.superglobals.php" target="_blank">superglobale</a> `$_GET` 
+va contenir les données envoyées  
+| Nom             	| Valeur          	      |
+|:-----------------:|:-----------------------:|
+| $\_GET['email'] 	| utilisateur@example.com |
+| $\_GET['message'] | Bonjour				  |
+  
+	```php
+	<h1>Message bien reçu !</h1>
+        
+	<div class="card">
+	    
+	    <div class="card-body">
+	        <h5 class="card-title">Rappel de vos informations</h5>
+	        <p class="card-text"><b>Email</b> : <?php echo $_GET['email']; ?></p>
+	        <p class="card-text"><b>Message</b> : <?php echo $_GET['message']; ?></p>
+	    </div>
+	</div>
+	```  
+	<p align="center"><strong>submit_contact.php</strong></p>  
+⚠️Ne jamais faire confiance qui transitent de page en page 
