@@ -129,57 +129,6 @@ Tableau qui sert a *étiqueter* les cases au lieu de les *numéroter*
 		echo $recipe['title']; //Cassoulet
 		?>
 	```
-	- **print_r**  
-	Permet d'afficher entièrement un tableau (une sorte d'echo spécialisé pour les tableaux)  
-	Utile pour le déboggage
-	```php
-	<?php
-	$recipes = [
-    	[
-        	'title' => 'Cassoulet',
-        	'recipe' => '',
-        	'author' => 'mickael.andrieu@exemple.com',
-        	'is_enabled' => true,
-    	],
-    	[
-        	'title' => 'Couscous',
-        	'recipe' => '',
-        	'author' => 'mickael.andrieu@exemple.com',
-        	'is_enabled' => false,
-    	],
-	];
-
-	echo '<pre>'; //permet d'avoir un affichage plus lisible
-	print_r($recipes);
-	echo '</pre>';
-	?>
-	```
-	- **array_key_exists**, **in_array** et **array_search**
-	```php
-	<?php
-	$recipe = [
-	    'title' => 'Salade Romaine',
-	    'recipe' => 'Etape 1 : Lavez la salade ; Etape 2 : euh ...',
-	    'author' => 'laurene.castor@exemple.com',
-	];
-
-	//renvoie true si la clé est dans le tableau, false sinon
-	if (array_key_exists('title', $recipe))
-	{
-    	echo 'La clé "title" se trouve dans la recette !';
-	}
-
-	//renvoie true si la val se trouve dans le tableau, false sinon
-	if (in_array('Salade Romaine', $recipe))
-	{
-	    echo 'carré';
-	}
-
-	//renvoie la clé correspondante (num ou nom ça dépend du tableau) si elle trouve la val, faux sinon
-	$cleSalade = array_search('Salade Romaine', $recipe)
-	echo '"Salade Romaine" se trouve dans' . $cleSalade . PHP_EOL;
-	?>
-	```
 - Boucles :
 	- **while**
 	```php
@@ -288,6 +237,57 @@ Tableau qui sert a *étiqueter* les cases au lieu de les *numéroter*
 	}
 	?>
 	```
+	- **print_r**  
+	Permet d'afficher entièrement un tableau (une sorte d'echo spécialisé pour les tableaux)  
+	Utile pour le déboggage
+	```php
+	<?php
+	$recipes = [
+    	[
+        	'title' => 'Cassoulet',
+        	'recipe' => '',
+        	'author' => 'mickael.andrieu@exemple.com',
+        	'is_enabled' => true,
+    	],
+    	[
+        	'title' => 'Couscous',
+        	'recipe' => '',
+        	'author' => 'mickael.andrieu@exemple.com',
+        	'is_enabled' => false,
+    	],
+	];
+
+	echo '<pre>'; //permet d'avoir un affichage plus lisible
+	print_r($recipes);
+	echo '</pre>';
+	?>
+	```
+	- **array_key_exists**, **in_array** et **array_search**
+	```php
+	<?php
+	$recipe = [
+	    'title' => 'Salade Romaine',
+	    'recipe' => 'Etape 1 : Lavez la salade ; Etape 2 : euh ...',
+	    'author' => 'laurene.castor@exemple.com',
+	];
+
+	//renvoie true si la clé est dans le tableau, false sinon
+	if (array_key_exists('title', $recipe))
+	{
+    	echo 'La clé "title" se trouve dans la recette !';
+	}
+
+	//renvoie true si la val se trouve dans le tableau, false sinon
+	if (in_array('Salade Romaine', $recipe))
+	{
+	    echo 'carré';
+	}
+
+	//renvoie la clé correspondante (num ou nom ça dépend du tableau) si elle trouve la val, faux sinon
+	$cleSalade = array_search('Salade Romaine', $recipe)
+	echo '"Salade Romaine" se trouve dans' . $cleSalade . PHP_EOL;
+	?>
+	```
 	- **Controle**
 	```php
 	<?php
@@ -339,7 +339,7 @@ On peut en employer deux :
 	</form>
 	```
 	<p align="center"><strong>index.php</strong></p>  
-
+	
 		- L'utilisateur a entré dans le formulaire `utilisateur@example.com` et `Bonjour`  
 		- Le formulaire va etre converti en lien vers : `submit_contact.php?email=utilisateur%40example.com&message=Bonjour`  
 		- Ces informations pourront etre recuperés dans `submit_contact.php`
