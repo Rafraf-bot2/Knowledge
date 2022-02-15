@@ -344,7 +344,8 @@ On peut en employer deux :
 	Le formulaire va etre converti en lien vers : `submit_contact.php?email=utilisateur%40example.com&message=Bonjour`  
 	Ces informations pourront etre recuperés dans `submit_contact.php`
 	Une variable <a href="https://www.php.net/manual/fr/language.variables.superglobals.php" target="_blank">superglobale</a> `$_GET` 
-va contenir les données envoyées  
+	va contenir les données envoyées  
+
 | Nom             	| Valeur          	      |
 |:-----------------:|:-----------------------:|
 | $\_GET['email'] 	| utilisateur@example.com |
