@@ -321,7 +321,7 @@ Forme d'un formulaire :
 - `method` = Méthode d'envoie utilisée  
 On peut en employer deux :
 	- `get` : Les données transitent par l'url (données limitées car URL <= 256 de préference). On les recupère avec le tableau `$_GET`.
-	- `post` : Les données ne transitent pas par l'url (donc données illimités). On les recupère avec le tableau `$_POST`
+	- `post` : Les données ne transitent pas par l'url (donc données illimités). On les recupère avec le tableau `$_POST`  
 	⚠️On vérifie quand meme les parametres.  
 ⚠️On privilégie `post`   
 <br>Exemple avec `get` :
