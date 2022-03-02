@@ -157,6 +157,33 @@ On peut aussi combier **entrypoint** et **cmd** pour avoir une valeur d'argument
 	CMD ["5"]
 Si on ne specifie pas une valeur lors de la commande `docker run` alors le container va executer un sleep de 5
 
+#### Exemple Dockerfile
+	``
+	FROM debian:9
+
+	RUN apt-get update -yq \ 
+	&& apt-get install curl gnupg -yq \
+	&& curl -sL https://deb.nodesource.com/setup_10.x | bash \
+	&& apt-get install nodejs -yq \
+	&& apt-get clean -y
+
+	ADD . /app/
+	WORKDIR /app 
+	RUN npm install
+
+	EXPOSE 2368
+	VOLUME /app/logs
+
+	CMD npm run start
+	``
+**Récap :**  
+- `FROM` : utilisable une fois seulement, specifie l'os de base de l'image
+- `RUN` : essayer de les limiter est souhaitable afin de limiter le nbr de layer crées, exec la cmd specifiée
+- `ADD` : copie ou dl des fichiers dans l'image   
+- `WORDKIR` :  modifie le rep courant, les cmd qui suiveront seront exécutées depuis le repertoire défini
+- `EXPOSE ` :  indique le port sur laquelle l'appli écoute  
+- `VOLUME` : indique le rep qui sera partagé avec l'hote
+- `CMD` : permet au conteneur de savoir quelle cmd executer lors de son démarrage  
 ***
 
 ### 🚆 Réseau
