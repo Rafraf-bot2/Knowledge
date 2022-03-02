@@ -158,7 +158,7 @@ On peut aussi combier **entrypoint** et **cmd** pour avoir une valeur d'argument
 Si on ne specifie pas une valeur lors de la commande `docker run` alors le container va executer un sleep de 5
 
 #### Exemple Dockerfile
-	``
+	
 	FROM debian:9
 
 	RUN apt-get update -yq \ 
@@ -175,17 +175,30 @@ Si on ne specifie pas une valeur lors de la commande `docker run` alors le conta
 	VOLUME /app/logs
 
 	CMD npm run start
-	``
+	
 **Récap :**  
 - `FROM` : utilisable une fois seulement, specifie l'os de base de l'image
 - `RUN` : essayer de les limiter est souhaitable afin de limiter le nbr de layer crées, exec la cmd specifiée
 - `ADD` : copie ou dl des fichiers dans l'image   
 - `WORDKIR` :  modifie le rep courant, les cmd qui suiveront seront exécutées depuis le repertoire défini
-- `EXPOSE ` :  indique le port sur laquelle l'appli écoute  
+- `EXPOSE` :  indique le port sur laquelle l'appli écoute  
 - `VOLUME` : indique le rep qui sera partagé avec l'hote
 - `CMD` : permet au conteneur de savoir quelle cmd executer lors de son démarrage  
 ***
 
+#### DockerHub
+Publier son image sur DockerHub :  
+1. `docker tag nomImage:tag nomUser/nomImage:tag`  
+1. `docker push nomUser/nomImage:tag`  
+On peut changer de version de l'image en changeant `tag` mais ⚠️ la version `latest` est toujours utilisée par défaut  
+
+**exemple** :  
+
+	
+	docker tag ocr-docker-build:latest rafraf30/ocr-docker-build:latest
+	
+	docker push rafraf30/ocr-docker-build:latest
+	
 ### 🚆 Réseau
 Il existe 3 modes de réseau 
 1. **Bridge**  
