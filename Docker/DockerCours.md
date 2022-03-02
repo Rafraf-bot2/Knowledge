@@ -4,6 +4,32 @@ Resumé de mes connaissances sur Docker
 
 ***
 
+### 🆚 Conteneur VS VM
+- **VM** 
+	- Virtualisation lourde  
+	- Prends du temps à demarrer
+	- Les ressources attribuée lui sont totalement réservées
+	- Totalement isolée du sys hote
+	- Différents OS possible
+- **Conteneur** 
+	- Virtualisation légère
+	- Ne virtualise pas les ressources, crée une isolation de processus, partage les ressources avec l'hote
+	- Ne reserve que les ressources nécessaires
+	- Démarre rapidement  
+Les conteneurs réduisent les couts, augmentent la densité de l'infrastructure, tout en améliorant le cycle de déploiement  
+⚠️L'un de remplace pas l'autre
+
+<p align="center">
+	<img src="img/VMvsDocker.png" width="500" height ="315">
+	<br>
+	Conteneur VS VM
+</p>
+
+### 🤔 Pourquoi Docker
+⚠️Docker ne fait tourner qu'un processus par conteneur, donc si on a une stack **Apache, MySQL, PHP** on aura 3 conteneur (1 pour chaque service)  
+-  Il est plus simple d'utiliser Docker en local quand on travaille avec de nombreuses versions différentes des logiciels, et ainsi ne pas avoir de problèmes de compatibilité entre elles.
+- Docker apporte aussi les notions de **stateless** et d'**immutabilité** (cf : <a href="https://openclassrooms.com/fr/courses/2035766-optimisez-votre-deploiement-en-creant-des-conteneurs-avec-docker/6211349-decouvrez-ce-quest-docker#/id/r-6211325" target = "_blank">Stateless et immutabilité</a>)
+
 ### 👨‍💻 CMD
 **🚧 On peut specifier un idContainer avec seulement ses premiers caractères (suffisament pour le differencier des autres containers)**
 
