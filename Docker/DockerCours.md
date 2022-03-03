@@ -25,10 +25,12 @@ Les conteneurs réduisent les couts, augmentent la densité de l'infrastructure,
 	Conteneur VS VM
 </p>
 
+***
 ### 🤔 Pourquoi Docker
 ⚠️Docker ne fait tourner qu'un processus par conteneur, donc si on a une stack **Apache, MySQL, PHP** on aura 3 conteneur (1 pour chaque service)  
 -  Il est plus simple d'utiliser Docker en local quand on travaille avec de nombreuses versions différentes des logiciels, et ainsi ne pas avoir de problèmes de compatibilité entre elles.
 - Docker apporte aussi les notions de **stateless** et d'**immutabilité** (cf : <a href="https://openclassrooms.com/fr/courses/2035766-optimisez-votre-deploiement-en-creant-des-conteneurs-avec-docker/6211349-decouvrez-ce-quest-docker#/id/r-6211325" target = "_blank">Stateless et immutabilité</a>)
+***
 
 ### 👨‍💻 CMD
 **🚧 On peut specifier un idContainer avec seulement ses premiers caractères (suffisament pour le differencier des autres containers)**
@@ -186,7 +188,7 @@ Si on ne specifie pas une valeur lors de la commande `docker run` alors le conta
 - `CMD` : permet au conteneur de savoir quelle cmd executer lors de son démarrage  
 ***
 
-#### DockerHub
+### 👓 DockerHub
 Publier son image sur DockerHub :  
 1. `docker tag nomImage:tag nomUser/nomImage:tag`  
 1. `docker push nomUser/nomImage:tag`  
@@ -196,7 +198,7 @@ On peut changer de version de l'image en changeant `tag` mais ⚠️ la version 
 
 	
 	docker tag ocr-docker-build:latest rafraf30/ocr-docker-build:latest
-	
+
 	docker push rafraf30/ocr-docker-build:latest
 	
 ### 🚆 Réseau
@@ -216,7 +218,23 @@ Associe le container au réseau de l'hote, supprime toute isolation entre le con
 	<br>
 	Les différents modes réseau
 </p>
+***
 
+### 🐙 Docker Compose
+Docker Compose permet d'orcherstrer des conteneurs et de simplifier les déploiements sur de multiples environnements  
+Docker Compose utilise le fichier `docker-compose.yml`  
+- Demarrer une stack Docker Compose  
+	`docker-compose up -d` : `-d` pour faire tourner les conteneurs en tache de fond
+- Voir le statut d'une stack Docker Compose  
+	`docker-compose ps`
+- Voir les logs d'une stack Docker Compose  
+	`docker-compose logs -f --tail 5` : permet de voir les logs des différents conteneurs de façon continue, en limitant l'affichage aux 5 premières lignes  
+- Arreter une stack Docker Compose  
+	`docker-compose stop`
+- Supprimer les ressources crée par une stack Docker Compose  
+	`docker-compose down`
+- Verifier la syntaxe de `docker-compose.yml`  
+	`docker-compose config`
 ***
 
 ### 🖊 Annexes
