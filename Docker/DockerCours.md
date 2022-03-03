@@ -235,6 +235,36 @@ Docker Compose utilise le fichier `docker-compose.yml`
 	`docker-compose down`
 - Verifier la syntaxe de `docker-compose.yml`  
 	`docker-compose config`
+
+#### Syntaxe fichier docker-compose.yml
+	version: 'numVersion'
+	services:
+		nomConteneur1:
+			image: nomImage:tag
+			volumes:
+				- db_data:dossierEnregistré
+			restart: typeDePolitique
+			environment:
+				VAR1: val1
+				VAR2: var2
+		...
+		...
+
+		nomConteneur2:
+			depends_on:
+			- nomConteneur1
+			image: nomImage:tag
+			ports:
+				- "numPort"
+		...
+		...
+
+- `image:` : image docker que l'on veut utiliser, on peut également spécifier le chemin d'un dockerfile
+- `volumes:` : permet de rendre les données spécifiée du conteneur persistanes
+- `restart:` : definit la politique de redemarrage du conteneur ex: `always` pour redemarrer automatiquement
+- `environement:` : pour specifier les variables d'environnement
+- `depends_on:` : crée une dependance entre conteneur, dans le sample plus haut Docker démarrera nomConteneur1 avant nomConteneur2
+- `ports:` : pour dire à Docker Compose que l'on veut exposer un port de la machine hote vers notre conteneur, et ainsi le rendre accessible depuis l'exterieur 
 ***
 
 ### 🖊 Annexes
