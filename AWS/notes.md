@@ -56,3 +56,20 @@ Si RDS DB stoppée pendant longtemps, prendre un snap et le restaurer (car RDS f
 | **EBS**         | Disque dur externe branché sur un ordinateur         | Stockage persistant      |
 | **EFS**         | Disque réseau partagé par plusieurs ordinateurs      | Partage facile de fichiers|
 | **Instance Store**| Clé USB très rapide, mais temporaire               | Données temporaires rapides|
+
+### S3 : Sécurité
+
+
+#### **Résumé rapide des méthodes :**
+
+| Méthode         | Gestion des clés    | Facilité            | Contrôle clés        | Niveau sécurité |
+|-----------------|---------------------|---------------------|----------------------|-----------------|
+| **SSE-S3**      | AWS                 | ✅ Très facile       | ⚠️ Faible            | Élevé           |
+| **SSE-KMS**     | AWS KMS             | ✅ Facile à moyen    | ✅ Élevé             | Très élevé      |
+| **SSE-C**       | Client              | ⚠️ Complexe         | ✅ Très élevé        | Très élevé      |
+| **Client-Side** | Client ou AWS KMS   | ⚠️ Complexe         | ✅ Très élevé        | Très élevé      |
+
+- **SSE-S3** : simplicité maximale.
+- **SSE-KMS** : équilibre simplicité/contrôle.
+- **SSE-C / Client-side** : contrôle total, mais gestion complexe.
+
