@@ -73,3 +73,22 @@ Si RDS DB stoppée pendant longtemps, prendre un snap et le restaurer (car RDS f
 - **SSE-KMS** : équilibre simplicité/contrôle.
 - **SSE-C / Client-side** : contrôle total, mais gestion complexe.
 
+---
+## CloudFront & AWS Global Accelerator
+
+### CloudFront vs S3 Cross Region Replication
+
+| Critères               | CloudFront                           | S3 Cross-Region Replication   |
+|------------------------|--------------------------------------|--------------------------------|
+| **Fonction principale**| Accélération livraison contenu mondial| Réplication régionale S3       |
+| **Latence utilisateurs**| Très faible ✅                       | Réduite (mais plus élevée qu'un CDN) ⚠️ |
+| **Stockage des données**| Cache temporaire (Edge Locations)    | Copie permanente des données ✅|
+| **Disponibilité**      | Globale ✅                            | Régionale (multi-région) ✅    |
+| **Coût**               | Bas à moyen (réduction transfert) ✅  | Plus élevé (double stockage) ⚠️ |
+| **Gestion complexité** | Simple ✅                             | Moyenne à élevée ⚠️            |
+
+
+- Utilise **CloudFront** pour servir très rapidement du contenu à des utilisateurs finaux partout dans le monde.
+- Utilise **S3 Cross-Region Replication** pour la résilience, la disponibilité multi-région des données, ou des obligations légales.
+
+
