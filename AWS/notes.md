@@ -175,3 +175,26 @@ Choisis **FSx for Lustre** si tu as besoin d’un système de fichiers **ultra r
 | **Cas d’usage typique**                | Découplage applicatif, traitement asynchrone                                  | Notifications multiples, diffusion simple                               | Traitement de flux en temps réel, analytics, ETL                             |
 | **Fonctionnalités spéciales**          | Délai par message, DLQ, FIFO                                                  | Jusqu’à **100 000 sujets**                                              | Lecture en différé (replay), traitement Big Data                             |
 
+---
+## Containers on AWS
+
+### Comparatif : ECS vs EKS vs Fargate
+
+| **Critère**                         | **Amazon ECS**                             | **Amazon EKS**                             | **AWS Fargate**                                         |
+|------------------------------------|--------------------------------------------|--------------------------------------------|---------------------------------------------------------|
+| **Type de service**                | Orchestration de conteneurs AWS natif      | Orchestration de conteneurs via Kubernetes | Mode d'exécution (backend) pour ECS ou EKS              |
+| **Orchestration**                  | Propriétaire AWS                           | Kubernetes (standard open-source)          | Géré par AWS                                            |
+| **Compatibilité outils K8s**       | ❌ Non                                      | ✅ Oui (kubectl, Helm…)                    | ✅ Oui, via ECS ou EKS                                  |
+| **Plan de contrôle**               | Géré par AWS                               | Géré par AWS                               | Pas concerné                                            |
+| **Gestion des nœuds (compute)**    | EC2 ou Fargate                              | EC2, Fargate ou self-managed EC2           | **Zéro gestion EC2** (serverless)                       |
+| **Courbe d’apprentissage**         | 📉 Facile                                   | 📈 Plus complexe (Kubernetes)              | 📉 Très simple                                          |
+| **Flexibilité / Portabilité**      | ❌ Moins flexible, AWS-only                | ✅ Très flexible, multi-cloud possible     | ❌ AWS only, moins de personnalisation                  |
+| **Scalabilité automatique**        | Oui (avec service + ALB)                    | Oui (avec HPA, Karpenter ou Fargate)       | Oui (auto-scaling intégré)                             |
+| **Cas d’usage typique**            | Déploiements simples, applications web      | Architectures microservices avancées       | Conteneurs rapides, sans infra à gérer                  |
+| **Facturation**                    | EC2 ou Fargate                              | EC2 ou Fargate                              | À la **seconde** (CPU + RAM utilisés)                  |
+
+- **ECS** : simple, rapide, AWS-only, parfait pour déployer des apps conteneurisées sans trop de complexité.
+- **EKS** : puissance et standardisation Kubernetes, mais plus technique.
+- **Fargate** : **mode d’exécution serverless** pour ECS ou EKS → zéro infra à gérer.
+
+---
