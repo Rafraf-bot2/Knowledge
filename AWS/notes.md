@@ -241,3 +241,6 @@ AWS Lake Formation est un service conçu pour automatiser la création et la sé
 - **Pour l’examen AWS SAA** :  
 	  - Peut apparaître dans les questions relatives à la mise en place d’un **data lake** sécurisé, le catalogage et la gouvernance des données.  
 	  - Se compare à la solution classique “Glue + IAM Policies + Bucket Policies” : Lake Formation va plus loin en offrant une gouvernance plus fine et centralisée.  
+
+---
+
