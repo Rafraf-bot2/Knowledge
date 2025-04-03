@@ -243,7 +243,6 @@ Amazon Personalize est un service de recommandation managé qui utilise le machi
 	  - **Secteur bancaire ou assurances** : automatiser la saisie de données depuis de la paperasse traditionnelle.  
 
 - **Pour l’examen AWS SAA :**
-
 	  - Peu évoqué en détail, mais peut apparaître dans des scénarios de **dématérialisation** ou d’**automatisation de flux documentaires**.  
 	  - Concurrence/Comparaison :  
 	    - **Rekognition** lit le texte basique sur des images, mais Textract est spécialisé dans la **lecture structurée (tables, formulaires)**.  
