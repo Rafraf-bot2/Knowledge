@@ -19,9 +19,112 @@
 - **Spread** : Instances réparties sur différents matériels (max 7 par AZ).
 - **Partition** : Instances réparties par partitions indépendantes (jusqu'à des centaines par AZ, idéal pour Hadoop, Cassandra, Kafka).
 
+Les Elastic Interfaces (ENI) sont limitées à une AZ spécifique.
+
 ---
 ## High availabity & Scalabilty
 ⚠️ GENEVE protocol port 6081 => Gateway Load Balancer
+
+---
+## Route 53
+
+- **Service DNS (Domain Name System) managé par AWS**  
+	  - Traduit les **noms de domaine** (ex. `example.com`) en **adresses IP**  
+	  - Fournit aussi des fonctionnalités de **routing intelligent** et de **monitoring**
+
+- **DNS haute disponibilité et faible latence**  
+	  - Utilise une **infrastructure mondiale** redondée et répartie pour une **résolution rapide et fiable**  
+	  - Haute tolérance aux pannes
+
+- **Enregistrement de domaines**  
+	  - Permet d’**acheter et gérer des noms de domaine** directement via AWS  
+	  - Compatible avec des **TLD courants** (`.com`, `.org`, etc.)
+
+- **Routage du trafic DNS**  
+
+    | **Type de routage**           | **Description**                                                                 |
+    |-------------------------------|----------------------------------------------------------------------------------|
+    | **Simple**                    | Redirige vers une seule ressource (ex : 1 IP, 1 site)                            |
+    | **Weighted**                  | Distribution selon des **poids définis** (ex : 70% vers A, 30% vers B)           |
+    | **Latency-based**             | Envoie le client vers la **région AWS la plus rapide**                          |
+    | **Failover**                  | Redirige vers une **cible de secours** en cas de panne de la principale         |
+    | **Geolocation**               | Routage basé sur la **localisation géographique de l’utilisateur**              |
+    | **Geoproximity (avec Traffic Flow)** | Routage par **proximité géographique**, pondérable                          |
+    | **Multi-value Answer**        | Donne plusieurs réponses (façon round-robin), avec **vérification de santé**    |
+
+- **Health checks intégrés**  
+	  - Route53 peut **surveiller l’état de santé** de tes ressources (EC2, ELB, etc.)  
+	  - Combine santé + type de routage (ex : failover automatique)
+
+- **Intégration avec d’autres services AWS** :  
+  - **ELB**, **CloudFront**, **S3 Static Website**, **API Gateway**, etc.  
+  - Peut gérer des **alias records** (comme un CNAME mais sans coût DNS supplémentaire)
+
+- **Sécurisation**  
+  - Supporte **DNSSEC** (Domain Name System Security Extensions)  
+  - Contrôle via **IAM policies** pour les zones hébergées
+
+- **Pour l’examen AWS SAA**  
+	- **Très fréquent** !  
+		  - Bien maîtriser les **types de routage** et quand les utiliser  
+		  - Savoir qu’un **alias record** peut pointer vers une ressource AWS sans coût supplémentaire  
+		  - Comprendre le lien entre **health check**, **failover**, et **haute disponibilité**
+
+---
+## Golden AMI
+Une **Golden AMI** (Amazon Machine Image "dorée") est une **image EC2 préconfigurée, sécurisée et standardisée**, utilisée comme **base unique pour lancer toutes les instances** d'une organisation.
+
+### 🧠 En clair
+
+- C’est une **AMI personnalisée** contenant :
+  - Le **système d’exploitation**
+  - Tous les **logiciels nécessaires** (ex : agent CloudWatch, outils internes, runtime applicatif)
+  - Les **patchs de sécurité** à jour
+  - Les **paramètres de configuration standards** (firewall, monitoring, users, etc.)
+
+### 🎯 Pourquoi utiliser une Golden AMI ?
+
+- **Standardisation** : toutes les instances lancées sont identiques et conformes aux règles de l’entreprise  
+- **Sécurité** : tu maîtrises ce qu’il y a dans l’image (pas de dépendance sur une AMI publique inconnue)  
+- **Gain de temps** : tu évites d’installer et configurer à chaque lancement  
+- **Facilité d’audit et de conformité**  
+- Tu peux l’utiliser dans un **pipeline CI/CD** pour automatiser les déploiements avec des images propres
+
+
+---
+## Elastic Beanstalk
+- Plateforme **PaaS (Platform as a Service)** qui permet de **déployer automatiquement des applications web**  
+- Tu envoies ton code, Beanstalk s’occupe de **toute l’infrastructure autour** :  
+  - Provisionnement des ressources (EC2, Load Balancer, Auto Scaling, RDS, etc.)  
+  - Déploiement de l’application  
+  - Monitoring et mise à jour
+
+- Compatible avec plusieurs environnements applicatifs :  
+  - **Java, Python, .NET, PHP, Node.js, Ruby, Go, Docker**  
+  - Prend en charge les **applications web** ou **les APIs backend**
+
+- Tu gardes **le contrôle complet des ressources AWS sous-jacentes**  
+  - Tu peux les personnaliser (EC2 type, ASG config, VPC, etc.)  
+  - Beanstalk génère automatiquement une **stack CloudFormation**
+
+- Intégré avec d'autres services AWS :  
+  - **CloudWatch** pour les logs/metrics  
+  - **IAM** pour contrôler les permissions  
+  - **RDS** si besoin de base de données
+
+### Avantages
+
+- Déploiement **rapide** d’une appli en quelques clics ou lignes de commande  
+- **Pas besoin de gérer manuellement les ressources** AWS  
+- Très utile pour les **environnements de test, staging, ou dev rapide**  
+- Supporte **rolling updates**, **blue/green deployments**, **monitoring**, **auto scaling**
+
+### Limitations
+
+- Moins flexible qu’une architecture totalement managée à la main  
+- Moins adapté aux **architectures microservices complexes**  
+- **Opinionated** : AWS prend certaines décisions pour toi
+
 
 ---
 ## CloudFront & AWS Global Accelerator

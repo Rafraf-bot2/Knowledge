@@ -22,9 +22,8 @@
 7. **Timestream** : Time-series data (IoT, monitoring).  
 8. **DynamoDB** : NoSQL clé-valeur performante et scalable.
 
----
 
-### Amazon RDS
+## Amazon RDS
 
 **Amazon RDS (Relational Database Service)** permet d’exécuter facilement des bases de données relationnelles sans avoir à gérer l’infrastructure (serveurs, patching, sauvegardes...).
 
@@ -34,7 +33,7 @@
 | **Engines supportés**                      | PostgreSQL, MySQL, MariaDB, Oracle, SQL Server, **RDS Custom** (Oracle/SQL Server avancé)   |
 | **Dimensionnement**                        | Taille de l’instance et type/volume de stockage **EBS** configurables                       |
 | **Auto-scaling du stockage**               | ✅ Le stockage peut **s’ajuster automatiquement** à la croissance des données                |
-| **Haute disponibilité**                    | - **Multi-AZ** : réplique synchronisée pour tolérance aux pannes 🔁<br>- **Read Replicas** : pour répliquer en lecture seule et scaler les requêtes |
+| **Haute disponibilité**                    | - **Multi-AZ** : réplique synchronisée pour tolérance aux pannes 🔁<br>- **Read Replicas** : pour répliquer en lecture seule et scaler les requêtes (15 max) |
 | **Sécurité**                               | - Intégration IAM (authentification)<br>- Chiffrement avec **KMS** (au repos)<br>- **SSL** (en transit)<br>- Groupes de sécurité |
 | **Sauvegardes automatiques**               | ✅ Restauration **point-in-time** jusqu’à 35 jours                                           |
 | **Snapshots manuels**                      | ✅ Sauvegardes persistantes pour restaurations à long terme                                  |
@@ -43,9 +42,19 @@
 | **RDS Custom**                             | Permet d’accéder au système d’exploitation (cas Oracle & SQL Server) pour des besoins spécifiques |
 | **Cas d’usage typiques**                   | - Applications OLTP<br>- Données relationnelles<br>- Requêtes SQL<br>- Transactions multi-tables |
 
-Voici une version **traduite, enrichie et structurée** pour bien comprendre **Amazon Aurora**, dans le cadre de ta préparation à la certification **AWS SAA** :
+### RDS Proxy
 
----
+| **Aspect**                  | **Amazon RDS Proxy**                                                                 |
+|----------------------------|----------------------------------------------------------------------------------------|
+| **Type de service**        | Service managé de **proxy de base de données**                                        |
+| **Rôles principaux**       | **Pooling de connexions**, **failover rapide**, **sécurité renforcée**                |
+| **Bénéfices**              | - Moins de connexions ouvertes directement sur RDS<br>- Réduction du temps de failover<br>- Optimisation des performances applicatives |
+| **Bases supportées**       | RDS MySQL, RDS PostgreSQL, Aurora MySQL, Aurora PostgreSQL                           |
+| **Compatible Lambda ?**    | ✅ Oui, recommandé pour les fonctions Lambda connectées à RDS                         |
+| **Sécurité**               | - Authentification IAM<br>- Chiffrement TLS<br>- Intégration avec **AWS Secrets Manager** |
+| **Gestion des connexions** | Oui (pooling et réutilisation automatique)                                            |
+| **Utilisation typique**    | - Architectures **serverless** ou à **fort trafic court**<br>- Besoin de **basculement rapide** |
+| **Limites**                | - Pas encore compatible avec tous les moteurs RDS<br>- **Ajoute une couche intermédiaire** |
 
 ## Amazon Aurora
 
@@ -88,6 +97,8 @@ Tu peux y mettre des images, vidéos, backups, etc., jusqu’à **5 To par objet
 | **Notifications**                     | **S3 Event Notifications** (via SNS, SQS, Lambda, EventBridge)                               |
 | **Cas d’usage**                       | Fichiers statiques (sites), sauvegardes, key-value store de gros objets, hébergement web     |
 
+### S3 / EBS / EFS / Instance Store
+
 | Solution        | Analogie simple                                      | Utilisation typique      |
 |-----------------|------------------------------------------------------|--------------------------|
 | **S3**          | Grand coffre-fort en ligne                           | Stockage durable, partage|
@@ -96,8 +107,8 @@ Tu peux y mettre des images, vidéos, backups, etc., jusqu’à **5 To par objet
 | **Instance Store**| Clé USB très rapide, mais temporaire               | Données temporaires rapides|
 
 - **S3** : Stockage objet, idéal pour fichiers statiques et archives.
-- **EBS** : Stockage bloc performant et persistant pour EC2.
-- **EFS** : Stockage fichier partagé entre instances EC2.
+- **EBS** : Stockage bloc performant et persistant pour EC2 (Lock dans sa AZ).
+- **EFS** : Stockage fichier partagé entre instances EC2 (Plusieurs AZ).
 - **Instance Store** : Stockage ultra-rapide mais temporaire.
 
 #### S3 : Sécurité
