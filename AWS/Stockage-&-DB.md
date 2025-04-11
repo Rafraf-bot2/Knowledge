@@ -75,7 +75,7 @@
 | **Cas d’usage typiques**                     | - Applis critiques (OLTP)<br>- Haute dispo requise<br>- Applis mondiales<br>- Microservices SQL |
 
 
-### Amazon S3
+## Amazon S3
 **Amazon S3**, c’est un gigantesque **“coffre-fort”** pour **stocker des fichiers (objets)** dans le cloud.  
 Tu peux y mettre des images, vidéos, backups, etc., jusqu’à **5 To par objet**. S3 est **hautement disponible et scalable**, et tu paies uniquement pour l’espace réellement occupé.
 
@@ -111,7 +111,7 @@ Tu peux y mettre des images, vidéos, backups, etc., jusqu’à **5 To par objet
 - **EFS** : Stockage fichier partagé entre instances EC2 (Plusieurs AZ).
 - **Instance Store** : Stockage ultra-rapide mais temporaire.
 
-#### S3 : Sécurité
+### S3 : Sécurité
 
 
 | Méthode         | Gestion des clés    | Facilité            | Contrôle clés        | Niveau sécurité |
@@ -125,7 +125,24 @@ Tu peux y mettre des images, vidéos, backups, etc., jusqu’à **5 To par objet
 - **SSE-KMS** : équilibre simplicité/contrôle.
 - **SSE-C / Client-side** : contrôle total, mais gestion complexe.
 
-#### Glacier
+
+- CORS (**Cross-Origin Resource Sharing**) permet à un **navigateur** d’accéder à des ressources situées sur un **domaine différent** de celui de l'application web  
+- Par défaut, **S3 bloque les requêtes cross-origin** pour des raisons de sécurité
+
+- Si ton **frontend (JavaScript dans le navigateur)** est hébergé sur `siteA.com` et qu’il tente d’accéder à un fichier stocké sur un **bucket S3 de `siteB.com`**, ça sera **bloqué** sans configuration CORS  
+- Pour autoriser cette interaction, il faut **ajouter une CORS configuration** dans les **paramètres du bucket S3**
+
+- Utilisé pour des cas comme :
+  - Chargement d’images ou de fichiers depuis S3 via un site web  
+  - Intégration d’un frontend hébergé ailleurs (ex : Netlify) qui interagit avec un backend S3
+
+- Pour l’examen AWS SAA, savoir que :
+  - Sans CORS, **les navigateurs bloquent les appels cross-origin vers S3**
+  - **La config CORS est définie au niveau du bucket**
+  - Elle est **nécessaire pour les applications web frontend** qui accèdent à S3 depuis le navigateur
+
+
+### Glacier
 
 | Critères            | Glacier Instant Retrieval  | Glacier Flexible Retrieval | Glacier Deep Archive  |
 |---------------------|----------------------------|----------------------------|-----------------------|
@@ -160,7 +177,76 @@ Choisis **FSx for Lustre** si tu as besoin d’un système de fichiers **ultra r
 
 **AWS Storage Gateway** est la solution si tu veux connecter ton environnement local au cloud **sans tout changer**, tout en profitant des avantages de **S3, Glacier et EBS** pour la sauvegarde, l’archivage et l’extension de capacité.
 
-### Recap
+## DynamoDB
+- Base de données **NoSQL** managée, hautement disponible, scalable, serverless  
+- Stocke les données sous forme de **tables**, chaque entrée est un **item**, avec une **clé primaire** (partition key, optionnellement sort key)  
+- Idéale pour des applications à haute vitesse : IoT, jeux, mobile, e-commerce, logs
+
+- Mode de capacité :
+    - **Provisioned** :
+        - Tu définis combien de **Read Capacity Units (RCU)** et **Write Capacity Units (WCU)** tu veux réserver
+        - 1 **RCU** = 1 lecture cohérente forte/seconde pour un objet de 4 Ko (ou 2 lectures éventuelles)
+        - 1 **WCU** = 1 écriture/seconde pour un objet de 1 Ko
+    - **On-Demand** :
+        - Tu ne gères pas la capacité, tu paies à l’usage (lectures/écritures réelles)
+        - Pratique pour charges imprévisibles ou début de projet
+
+- Deux types de lectures :
+    - **Strongly consistent** : données toujours à jour (1 RCU = 1 lecture 4 Ko)
+    - **Eventually consistent** : plus rapides et moins chères (1 RCU = 2 lectures 4 Ko)
+
+- Clés primaires :
+    - **Partition key uniquement** : chaque item a une clé unique
+    - **Partition key + Sort key** : permet plusieurs entrées avec même partition key, triées par sort key
+
+- Les données sont distribuées automatiquement sur plusieurs partitions selon la **partition key**  
+    - Il faut **bien choisir la clé** pour **éviter les "hot partitions"** (trop de requêtes concentrées)
+
+- Index :
+    - **GSI (Global Secondary Index)** : autre combinaison clé/tri, interrogeable à tout moment
+    - **LSI (Local Secondary Index)** : même partition key, autre sort key
+
+- Accès par API uniquement (pas de SQL), via **SDK AWS ou CLI**
+
+- **DynamoDB Accelerator (DAX)** :
+    - **Cache en mémoire** entièrement managé pour DynamoDB
+    - Réduit la latence de lecture à **quelques millisecondes** ou moins
+    - Fonctionne comme un **proxy en lecture seule**, compatible avec les SDK AWS
+    - À activer dans les cas où tu as beaucoup de **read throughput élevé et répétitif**
+
+- **Transactions** :
+    - Supporte les transactions **ACID** pour des écritures atomiques multi-items ou multi-tables
+
+- **TTL (Time to Live)** :
+    - Tu peux définir une **date d’expiration automatique** pour chaque item (colonne TTL)
+
+- **Streams** :
+    - Chaque modification de table peut être capturée dans un flux DynamoDB Stream
+    - Intégrable avec **Lambda** pour déclencher des actions en cas de modification
+
+- **Sauvegardes** :
+    - **On-Demand Backup** : snapshots manuels
+    - **Point-In-Time Recovery (PITR)** : restauration à n’importe quel instant sur les 35 derniers jours
+
+- **Auto Scaling** :
+    - En mode provisioned, DynamoDB peut **ajuster automatiquement les RCU/WCU** selon la charge
+
+- **DynamoDB Global Tables** :
+    - Réplication multi-région active/active automatique  
+    - Pour applications **globales** avec **latence très faible** et **haute disponibilité**
+
+- Pour l’examen AWS SAA :
+  - Notion **très fréquente** dans les questions d’architecture, performance, coût, caching
+  - Bien différencier :
+    - **On-Demand vs Provisioned**
+    - **GSI vs LSI**
+    - **RCU/WCU** (et leurs unités de mesure)
+    - **DAX** (cache lecture, faible latence, lecture uniquement)
+    - **Streams** (intégration Lambda)
+    - **Global Tables** (multi-région, active/active)
+
+
+## Recap
 
 | **Catégorie**                  | **Service**                    | **Description**                                                                                  |
 |-------------------------------|--------------------------------|--------------------------------------------------------------------------------------------------|
