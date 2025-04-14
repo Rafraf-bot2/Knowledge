@@ -41,9 +41,6 @@ Il stocke les données **en colonnes** plutôt qu’en lignes, ce qui facilite l
 
 ## Opensearch
 
-Voici une présentation **en deux parties** d’**Amazon OpenSearch Service** (anciennement **Amazon Elasticsearch Service**), avec un lien vers l’examen **AWS SAA** :
-
-
 **Amazon OpenSearch Service**, c’est comme un **moteur de recherche** managé qui te permet de faire des **recherches ultra-rapides** sur de gros volumes de données textuelles ou semi-structurées.  
 Tu peux y stocker des logs, des documents (JSON), et exécuter des **requêtes de recherche** ou **d’analytique** (agrégations) en **temps quasi réel**.  
 C’est super pour les **dashboards** de monitoring, la recherche libre-texte, ou l’analyse de logs.
